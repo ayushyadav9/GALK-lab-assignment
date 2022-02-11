@@ -22,8 +22,8 @@
   }
   .dashboard {
     background-color: #0e0b11;
-    height: 500px;
-    width: 1000px;
+    height: 600px;
+    width: 1100px;
     font-family: var(--font);
     display: flex;
     flex-direction: row;
@@ -88,6 +88,7 @@
     font-size: 0.9em;
     border-radius: 2px;
     cursor: pointer;
+    margin-top: 5px;
   }
   .task-add:hover {
     background-color: #ffdf8f;
@@ -146,7 +147,7 @@
     font-size: 0.84em;
   }
   .list-item-value {
-    width: 200px;
+    width: 500px;
   }
   .list-item-remove {
     display: flex;
@@ -166,7 +167,7 @@
     bottom: 15px;
     background-color: var(--bc-main);
     border-radius: 4px;
-    display: none;
+    /* display: none; */
     padding: 15px 10px;
     align-items: center;
     font-size: 0.84em;
