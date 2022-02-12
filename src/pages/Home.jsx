@@ -32,33 +32,29 @@ const Home = () => {
   const handelAddTask = () => {
     if (currTask.title.length >= 5) {
       setCurrTask({ title: "" });
-      let t = [
-        ...tasks,
-        { title: currTask.title, completed: false },
-      ];
+      let t = [...tasks, { title: currTask.title, completed: false }];
       setTasks(t);
-      setNotCompletedTask(t.filter((item) => !item.completed))
+      setNotCompletedTask(t.filter((item) => !item.completed));
       localStorage.setItem("tasks", JSON.stringify(t));
     } else {
       seterror(true);
     }
   };
 
-  const handelDelete = (delTitle,f) => {
+  const handelDelete = (delTitle, f) => {
     let t = tasks.filter((item) => item.title !== delTitle);
     localStorage.setItem("tasks", JSON.stringify([...t]));
     setTasks([...t]);
-    if(f){
+    if (f) {
       t = completedTask.filter((item) => item.title !== delTitle);
       setCompletedTask([...t]);
-    }
-    else{
+    } else {
       t = notCompletedTask.filter((item) => item.title !== delTitle);
-      setNotCompletedTask([...t])
+      setNotCompletedTask([...t]);
     }
   };
 
-  const handelCompleted = (comTitle,f) => {
+  const handelCompleted = (comTitle, f) => {
     for (let i = 0; i < tasks.length; i++) {
       if (tasks[i].title === comTitle) {
         tasks[i].completed = !tasks[i].completed;
@@ -66,16 +62,16 @@ const Home = () => {
     }
     setTasks([...tasks]);
     localStorage.setItem("tasks", JSON.stringify([...tasks]));
-    if(f){
+    if (f) {
       setCompletedTask([...tasks.filter((item) => item.completed)]);
       setNotCompletedTask([...tasks.filter((item) => !item.completed)]);
-    } 
+    }
   };
 
-  const handelRemove = ()=>{
+  const handelRemove = () => {
     setCompletedTask([...tasks.filter((item) => item.completed)]);
     setNotCompletedTask([...tasks.filter((item) => !item.completed)]);
-  }
+  };
 
   const handleKeypress = (e) => {
     if (e.charCode === 13) {

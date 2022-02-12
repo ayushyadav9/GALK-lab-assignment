@@ -2,8 +2,12 @@ import React from 'react'
 import styled from 'styled-components'
 import { DeleteOutlined } from "@ant-design/icons/lib/icons";
 
-const Right = ({handelCompleted,handelDelete,completedTask,notCompletedTask}) => {
-
+const Right = ({
+  handelCompleted,
+  handelDelete,
+  completedTask,
+  notCompletedTask,
+}) => {
   return (
     <Div className="dashboard-right">
       <div className="right-list">
@@ -13,21 +17,21 @@ const Right = ({handelCompleted,handelDelete,completedTask,notCompletedTask}) =>
         <div className="full-flex">
           <div className="list-flex">
             <h4>Remaining Tasks</h4>
-              {notCompletedTask.length > 0 &&
+            {notCompletedTask.length > 0 &&
               notCompletedTask.map((item, i) => {
                 return (
-                  <Task key={i} >
+                  <Task key={i}>
                     <div
                       className={`list-item-value ${
                         item.completed ? "completed" : ""
                       }`}
-                      onClick={() => handelCompleted(item.title,false)}
+                      onClick={() => handelCompleted(item.title, false)}
                     >
                       {item.title}
                     </div>
                     <div
                       className="list-item-remove"
-                      onClick={() => handelDelete(item.title,false)}
+                      onClick={() => handelDelete(item.title, false)}
                     >
                       <DeleteOutlined />
                     </div>
@@ -40,23 +44,22 @@ const Right = ({handelCompleted,handelDelete,completedTask,notCompletedTask}) =>
           </div>
           <div className="list-flex">
             <h4>Completed Tasks</h4>
-              {completedTask.length > 0 &&
+            {completedTask.length > 0 &&
               completedTask.map((item, i) => {
                 return (
-                  <Task key ={i} >
+                  <Task key={i}>
                     <div
                       className={`list-item-value ${
                         item.completed ? "completed" : ""
                       }`}
-                      onClick={() => handelCompleted(item.title,true)}
+                      onClick={() => handelCompleted(item.title, true)}
                     >
                       {item.title}
                     </div>
-                    <div
-                      className="list-item-remove"
-                      
-                    >
-                      <DeleteOutlined  onClick={() => handelDelete(item.title,true)}/>
+                    <div className="list-item-remove">
+                      <DeleteOutlined
+                        onClick={() => handelDelete(item.title, true)}
+                      />
                     </div>
                   </Task>
                 );
@@ -66,7 +69,7 @@ const Right = ({handelCompleted,handelDelete,completedTask,notCompletedTask}) =>
       </div>
     </Div>
   );
-}
+};
 
 const Div = styled.div`
   position: relative;
@@ -86,7 +89,7 @@ const Div = styled.div`
   }
   .task-add:hover {
     background-color: #ffdf8f;
-    color:black
+    color: black;
   }
   .right-list {
     padding: 20px;
@@ -138,7 +141,7 @@ const Div = styled.div`
     flex-direction: column;
     width: 50%;
   }
-  .list-flex h4{
+  .list-flex h4 {
     color: #b8b8b8;
     margin-bottom: 1em;
     font-size: 1em;
@@ -179,4 +182,4 @@ const Task = styled.div`
   }
 `;
 
-export default Right
+export default Right;

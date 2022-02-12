@@ -1,7 +1,15 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react";
+import styled from "styled-components";
 
-const Left = ({handleKeypress,currTask,setCurrTask,error,handelAddTask,handelRemove,notCompletedTask}) => {
+const Left = ({
+  handleKeypress,
+  currTask,
+  setCurrTask,
+  error,
+  handelAddTask,
+  handelRemove,
+  notCompletedTask,
+}) => {
   return (
     <Div>
       <div className="left-header">
@@ -9,24 +17,36 @@ const Left = ({handleKeypress,currTask,setCurrTask,error,handelAddTask,handelRem
       </div>
       <div className="left-task">
         <div className="task-info task-item">
-          <label htmlFor="" className="task-label">Task</label>
+          <label htmlFor="" className="task-label">
+            Task
+          </label>
           <input
             type="text"
             className="task-info-input task-input"
             onKeyPress={handleKeypress}
             value={currTask.title}
-            onChange={(e) =>setCurrTask({ ...currTask, title: e.target.value })}
+            onChange={(e) =>
+              setCurrTask({ ...currTask, title: e.target.value })
+            }
             placeholder="Go to the gym..."
           />
-          {error && (<div class="error-message">Please enter atleast 5 letters</div>)}
+          {error && (
+            <div class="error-message">Please enter atleast 5 letters</div>
+          )}
         </div>
-        <button className="task-add" onClick={handelAddTask}>Add Task</button>
-        {(notCompletedTask.length>0 && notCompletedTask.filter(i=>i.completed).length>0) && 
-          <button className="task-add2" onClick={() => handelRemove()}>Remove Completed Tasks</button>}
+        <button className="task-add" onClick={handelAddTask}>
+          Add Task
+        </button>
+        {notCompletedTask.length > 0 &&
+          notCompletedTask.filter((i) => i.completed).length > 0 && (
+            <button className="task-add2" onClick={() => handelRemove()}>
+              Remove Completed Tasks
+            </button>
+          )}
       </div>
     </Div>
   );
-}
+};
 
 const Div = styled.div`
   display: flex;
@@ -101,7 +121,7 @@ const Div = styled.div`
   }
   .task-add2:hover {
     background-color: #ffdf8f;
-    color:black
+    color: black;
   }
   .error-message {
     color: #cc0033;
@@ -112,4 +132,4 @@ const Div = styled.div`
   }
 `;
 
-export default Left
+export default Left;
