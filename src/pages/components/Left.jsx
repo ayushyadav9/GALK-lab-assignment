@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Left = ({handleKeypress,currTask,setCurrTask,error,handelAddTask,setListToShow}) => {
+const Left = ({handleKeypress,currTask,setCurrTask,error,handelAddTask,handelRemove,notCompletedTask}) => {
   return (
     <Div>
       <div className="left-header">
@@ -21,7 +21,8 @@ const Left = ({handleKeypress,currTask,setCurrTask,error,handelAddTask,setListTo
           {error && (<div class="error-message">Please enter atleast 5 letters</div>)}
         </div>
         <button className="task-add" onClick={handelAddTask}>Add Task</button>
-        <button className="task-add" onClick={() => setListToShow(2)}>Remove Completed Tasks</button>
+        {(notCompletedTask.length>0 && notCompletedTask.filter(i=>i.completed).length>0) && 
+          <button className="task-add2" onClick={() => handelRemove()}>Remove Completed Tasks</button>}
       </div>
     </Div>
   );
@@ -84,6 +85,23 @@ const Div = styled.div`
   }
   .task-add:hover {
     background-color: #ffdf8f;
+  }
+
+  .task-add2 {
+    padding: 10px;
+    outline: none;
+    background: transparent;
+    color: white;
+    font-family: inherit;
+    border: 1px solid #ffe6a7;
+    font-size: 0.9em;
+    border-radius: 2px;
+    cursor: pointer;
+    margin-top: 15px;
+  }
+  .task-add2:hover {
+    background-color: #ffdf8f;
+    color:black
   }
   .error-message {
     color: #cc0033;

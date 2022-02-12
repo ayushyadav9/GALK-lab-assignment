@@ -28,7 +28,7 @@ const Div = styled.div`
   align-items: center;
   padding: 15px 10px;
   background-color: #1a171d;
-  margin-bottom: 0.5rem;
+  margin: 0.5rem 0.8rem;
   border-radius: 6px;
   cursor: pointer;
   font-size: 0.85em;
@@ -43,7 +43,7 @@ const Div = styled.div`
     transition: all 0.4s ease-in-out;
   }
   .list-item-value {
-    width: 500px;
+    width: 250px;
   }
   .list-item-remove {
     display: flex;

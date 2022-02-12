@@ -1,71 +1,67 @@
 import React from 'react'
-import Task from './Task'
 import styled from 'styled-components'
+import { DeleteOutlined } from "@ant-design/icons/lib/icons";
 
-const Right = ({listToShow,setListToShow,tasks,handelCompleted,handelDelete,completedTask,notCompletedTask}) => {
+const Right = ({handelCompleted,handelDelete,completedTask,notCompletedTask}) => {
+
   return (
     <Div className="dashboard-right">
       <div className="right-list">
         <div className="right-top">
-          <h3 className="right-list-h3">
-            {listToShow === 0
-              ? "All Tasks"
-              : listToShow === 1
-              ? "Completed Tasks"
-              : "Not Completed Tasks"}
-          </h3>
-          <div style={{ display: "flex" }}>
-            <h4 className="right-list-h4">Show Completed List</h4>
-            <input
-              type="checkbox"
-              hidden="hidden"
-              onChange={() => {setListToShow(listToShow !== 1 ? 1 : 0)}}
-              id="username"
-            />
-            <label className="switch" htmlFor="username">{" "}</label>
+          <h3 className="right-list-h3">Your Tasks</h3>
+        </div>
+        <div className="full-flex">
+          <div className="list-flex">
+            <h4>Remaining Tasks</h4>
+              {notCompletedTask.length > 0 &&
+              notCompletedTask.map((item, i) => {
+                return (
+                  <Task key={i} >
+                    <div
+                      className={`list-item-value ${
+                        item.completed ? "completed" : ""
+                      }`}
+                      onClick={() => handelCompleted(item.title,false)}
+                    >
+                      {item.title}
+                    </div>
+                    <div
+                      className="list-item-remove"
+                      onClick={() => handelDelete(item.title,false)}
+                    >
+                      <DeleteOutlined />
+                    </div>
+                  </Task>
+                );
+              })}
           </div>
-        </div>
-        <div className="list-flex">
-          {listToShow === 0 &&
-            tasks.length > 0 &&
-            tasks.map((item, i) => {
-              return (
-                <Task
-                  key={i}
-                  item={item}
-                  handelCompleted={handelCompleted}
-                  handelDelete={handelDelete}
-                />
-              );
-            })}
-        </div>
-        <div className="list-flex">
-          {listToShow === 1 &&
-            completedTask.length > 0 &&
-            completedTask.map((item, i) => {
-              return (
-                <Task
-                  key={i}
-                  item={item}
-                  handelCompleted={handelCompleted}
-                  handelDelete={handelDelete}
-                />
-              );
-            })}
-        </div>
-        <div className="list-flex">
-          {listToShow === 2 &&
-            notCompletedTask.length > 0 &&
-            notCompletedTask.map((item, i) => {
-              return (
-                <Task
-                  key={i}
-                  item={item}
-                  handelCompleted={handelCompleted}
-                  handelDelete={handelDelete}
-                />
-              );
-            })}
+          <div class="outer">
+            <div class="inner"></div>
+          </div>
+          <div className="list-flex">
+            <h4>Completed Tasks</h4>
+              {completedTask.length > 0 &&
+              completedTask.map((item, i) => {
+                return (
+                  <Task key ={i} >
+                    <div
+                      className={`list-item-value ${
+                        item.completed ? "completed" : ""
+                      }`}
+                      onClick={() => handelCompleted(item.title,true)}
+                    >
+                      {item.title}
+                    </div>
+                    <div
+                      className="list-item-remove"
+                      
+                    >
+                      <DeleteOutlined  onClick={() => handelDelete(item.title,true)}/>
+                    </div>
+                  </Task>
+                );
+              })}
+          </div>
         </div>
       </div>
     </Div>
@@ -76,18 +72,49 @@ const Div = styled.div`
   position: relative;
   height: 100%;
   flex: 1;
+  .task-add {
+    padding: 7px 14px;
+    outline: none;
+    background: transparent;
+    color: white;
+    font-family: inherit;
+    border: 1px solid #ffe6a7;
+    font-size: 0.9em;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 15px;
+  }
+  .task-add:hover {
+    background-color: #ffdf8f;
+    color:black
+  }
   .right-list {
     padding: 20px;
     height: 100%;
     overflow: scroll;
   }
-  .right-top{
+  .right-top {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
   }
   .right-list::-webkit-scrollbar {
     display: none;
+  }
+  .outer {
+    width: 1px;
+    height: 100%;
+    margin: auto;
+    position: absolute;
+    overflow: hidden;
+  }
+  .inner {
+    position: absolute;
+    width: 100%;
+    height: 67%;
+    background: grey;
+    top: 10%;
+    box-shadow: 0px 0px 30px 20px grey;
   }
   .right-list h3 {
     color: #b8b8b8;
@@ -101,49 +128,54 @@ const Div = styled.div`
     margin-bottom: 1em;
     font-size: 0.8em;
   }
+  .full-flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
   .list-flex {
     display: flex;
     flex-direction: column;
+    width: 50%;
   }
-
-  .switch {
-    display: inline-block;
-    position: relative;
-    width: 30px;
-    height: 16px;
-    border-radius: 20px;
+  .list-flex h4{
+    color: #b8b8b8;
     margin-bottom: 1em;
-    background: #dfd9ea;
-    transition: background 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-    vertical-align: middle;
+    font-size: 1em;
+    margin: 0 auto;
+  }
+`;
+
+const Task = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 10px;
+  background-color: #1a171d;
+  margin: 0.5rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85em;
+  color: #fff;
+  transition: all 0.4s ease-in-out;
+  .completed {
+    text-decoration: line-through;
+    color: #cc0033;
+  }
+  .list-item:hover {
+    background-color: #f7f7f7 1a;
+    transition: all 0.4s ease-in-out;
+  }
+  .list-item-value {
+    width: 250px;
+  }
+  .list-item-remove {
+    display: flex;
+  }
+  .list-item-remove:hover {
+    color: #ff4646;
     cursor: pointer;
-  }
-  .switch::before {
-    content: "";
-    position: absolute;
-    top: 0px;
-    left: 2px;
-    width: 15px;
-    height: 15px;
-    background: #fafafa;
-    border-radius: 50%;
-    transition: left 0.28s cubic-bezier(0.4, 0, 0.2, 1),
-      background 0.28s cubic-bezier(0.4, 0, 0.2, 1),
-      box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  .switch:active::before {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.28),
-      0 0 0 20px rgba(128, 128, 128, 0.1);
-  }
-  input:checked + .switch {
-    background: #72da67;
-  }
-  input:checked + .switch::before {
-    left: 14px;
-    background: #fff;
-  }
-  input:checked + .switch:active::before {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.28), 0 0 0 20px rgba(0, 150, 136, 0.2);
   }
 `;
 

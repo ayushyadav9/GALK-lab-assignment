@@ -8,7 +8,6 @@ const Home = () => {
   const [currTask, setCurrTask] = useState({ title: "", completed: false });
   const [completedTask, setCompletedTask] = useState([]);
   const [notCompletedTask, setNotCompletedTask] = useState([]);
-  const [listToShow, setListToShow] = useState(0); //0-All, 1-Completed, 2-Not Completed
   const [error, seterror] = useState(false);
 
   useEffect(() => {
@@ -38,21 +37,28 @@ const Home = () => {
         { title: currTask.title, completed: false },
       ];
       setTasks(t);
+      setNotCompletedTask(t.filter((item) => !item.completed))
       localStorage.setItem("tasks", JSON.stringify(t));
     } else {
       seterror(true);
     }
   };
 
-  const handelDelete = (delTitle) => {
+  const handelDelete = (delTitle,f) => {
     let t = tasks.filter((item) => item.title !== delTitle);
-    setTasks([...t]);
-    setCompletedTask([...t.filter((item) => item.completed)]);
-    setNotCompletedTask([...t.filter((item) => !item.completed)]);
     localStorage.setItem("tasks", JSON.stringify([...t]));
+    setTasks([...t]);
+    if(f){
+      t = completedTask.filter((item) => item.title !== delTitle);
+      setCompletedTask([...t]);
+    }
+    else{
+      t = notCompletedTask.filter((item) => item.title !== delTitle);
+      setNotCompletedTask([...t])
+    }
   };
 
-  const handelCompleted = (comTitle) => {
+  const handelCompleted = (comTitle,f) => {
     for (let i = 0; i < tasks.length; i++) {
       if (tasks[i].title === comTitle) {
         tasks[i].completed = !tasks[i].completed;
@@ -60,9 +66,16 @@ const Home = () => {
     }
     setTasks([...tasks]);
     localStorage.setItem("tasks", JSON.stringify([...tasks]));
+    if(f){
+      setCompletedTask([...tasks.filter((item) => item.completed)]);
+      setNotCompletedTask([...tasks.filter((item) => !item.completed)]);
+    } 
+  };
+
+  const handelRemove = ()=>{
     setCompletedTask([...tasks.filter((item) => item.completed)]);
     setNotCompletedTask([...tasks.filter((item) => !item.completed)]);
-  };
+  }
 
   const handleKeypress = (e) => {
     if (e.charCode === 13) {
@@ -78,12 +91,10 @@ const Home = () => {
         setCurrTask={setCurrTask}
         error={error}
         handelAddTask={handelAddTask}
-        setListToShow={setListToShow}
+        handelRemove={handelRemove}
+        notCompletedTask={notCompletedTask}
       />
       <Right
-        listToShow={listToShow}
-        setListToShow={setListToShow}
-        tasks={tasks}
         handelCompleted={handelCompleted}
         handelDelete={handelDelete}
         completedTask={completedTask}
